@@ -1,15 +1,17 @@
 NAME = libftprintf.a
-
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Wall -Wextra -Werror
 
-LIBFT_DIR = ../libft
-LIBFT = $(LIBFT_DIR)/libft.a
+PRINTF_DIR = ./printf
+LIBFT_DIR  = ./libft
 
-SRCS = ft_printf.c ft_puthex.c ft_putunbr.c ft_format.c
+SRCS = $(PRINTF_DIR)/ft_printf.c \
+       $(PRINTF_DIR)/ft_puthex.c \
+       $(PRINTF_DIR)/ft_putunbr.c \
+       $(PRINTF_DIR)/ft_format.c
+
 OBJS = $(SRCS:.c=.o)
-
-HEADER = ft_printf.h
+HEADER = $(PRINTF_DIR)/libftprintf.h
 
 all: $(NAME)
 
@@ -17,7 +19,8 @@ $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+	# Qui dici al compilatore dove trovare gli header
+	$(CC) $(CFLAGS) -I$(PRINTF_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
